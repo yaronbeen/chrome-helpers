@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { font: 13px system-ui, sans-serif; width: 440px; margin: 8px; }
+  #bar { display: flex; gap: 6px; align-items: center; padding-bottom: 6px; border-bottom: 2px solid #ddd; }
+  #bar .grow { flex: 1; color: #555; }
+  #status { color: #1a73e8; font-size: 12px; margin: 4px 0; word-break: break-all; min-height: 0; }
+  #status.err { color: #c5221f; }
+  .row { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid #eee; }
+  .row.sel { background: #e8f0fe; }
+  .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+  .path { color: #777; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  button { cursor: pointer; }
+  button:disabled { cursor: default; }
+  #empty { color: #777; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <input type="checkbox" id="all" title="Select all">
+  <span class="grow" id="count">0 selected</span>
+  <button id="copySel" disabled>Copy paths</button>
+  <button id="openSel" disabled>Open</button>
+  <button id="zipSel" disabled>Zip</button>
+</div>
+<div id="status"></div>
+<div id="list"></div>
+<script src="popup.js"></script>
+</body>
+</html>

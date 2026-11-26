@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Copy Download Path",
+  "version": "1.1",
+  "description": "When a download finishes, click to copy its full file path instead of opening the file manager.",
+  "permissions": [
+    "downloads",
+    "downloads.open",
+    "notifications",
+    "offscreen",
+    "clipboardWrite",
+    "nativeMessaging"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Recent downloads - copy path",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "commands": {
+    "copy-last": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "Copy path of the last finished download"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAst3TRFyUYbFleyr7FtYLj3DYHOrRN68DrArTTO1m5opbIrIHyZBM37rR7Ea8hRDj3MpqUy4q3oDZyFevJgUlYOeZJf0Yhww7nVKQfARC592t9HTpdAlsvDEAE1jVA5i2N9hoMuHegP6bRJRGQFyQboL+L31DsMmN18/nv+qXPY1Tpx7yYp3XSajYkkDh+9Aq2iMl43kumZs/MH/2nbnRIWTG+RgBTktWk+ChsUIZerq+JTTI87C9hXu6X/mCA9e0oRo+TBX7zh4BUJyKelycgpDufJOH6azYYqaCDl31Cuej3XqOUKdegw9EQEC+EF93e57is04qU78Ejv0UGlNI1wIDAQAB"
+}
