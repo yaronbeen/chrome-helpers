@@ -22,3 +22,9 @@ git clone git@github.com:yaronbeen/chrome-helpers.git ~/code/chrome-helpers
 ~/code/chrome-helpers/install.sh
 ```
 Then in Chrome: `chrome://extensions` -> Developer mode -> **Load unpacked** -> `~/code/chrome-helpers/copy-download-path`.
+
+## If the extension disappears after a Chrome restart
+Chrome skips an unpacked folder silently when two registered extensions point at it
+with different IDs (e.g. loaded once without `key`, then reloaded after adding it).
+After changing `key` in `manifest.json`: click **Remove** on the old card, then **Load unpacked**
+(not **Reload**). Fix: **Load unpacked** again, then check `Ctrl+Shift+Y` at `chrome://extensions/shortcuts`.
