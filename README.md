@@ -12,7 +12,12 @@ Two small helpers for Chrome on Ubuntu (GNOME, X11).
 
 ## image-clip-path (background service)
 - When you copy an image in Chrome, it is saved to `~/.cache/chrome-copied-images/`
-  and the clipboard gets the file path instead.
+  and the clipboard keeps **both** the image and the file path. The paste key picks:
+  - `Ctrl+V` pastes the **image** (OpenCode attaches it; Slack, Gmail, etc. too)
+  - `Ctrl+Shift+V` pastes the **path** (plain-text paste; terminals already use this key)
+  - Right-click -> "Paste as plain text" also gives the path.
+- Tested in Chrome 146 and the OpenCode desktop app: a normal paste carries the image
+  file (OpenCode prefers files), and a plain-text paste carries only the path.
 - Files older than 24 hours are deleted (checked hourly).
 - Runs as the systemd user service `chrome-image-clip-path.service`.
 

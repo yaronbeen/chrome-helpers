@@ -1,5 +1,5 @@
 [Unit]
-Description=Copied Chrome images -> saved file, path in clipboard (deleted after 24h)
+Description=Copied Chrome images -> saved file; clipboard keeps image (Ctrl+V) and path (Ctrl+Shift+V); deleted after 24h
 PartOf=graphical-session.target
 After=graphical-session.target
 
