@@ -25,5 +25,14 @@ systemctl --user enable select-to-clipboard.service
 systemctl --user restart select-to-clipboard.service
 echo "Copy-on-select service: $(systemctl --user is-active select-to-clipboard.service)"
 
+# 4. Keep those selections out of CopyQ history (only if CopyQ is running)
+if command -v copyq >/dev/null && copyq count >/dev/null 2>&1; then
+  copyq eval -- 'var f="application/x-select-to-clipboard"; var c=commands();
+    if (!c.some(function(x){return x.input==f})) {
+      setCommands([{name:"Ignore copy-on-select (OpenCode selections)", automatic:true,
+        input:f, remove:true, cmd:"copyq ignore"}].concat(c)); print("added") }
+    else print("already there")' && echo " (CopyQ rule; restart CopyQ once if it was just added)"
+fi
+
 echo
 echo "Last step (once): chrome://extensions -> Developer mode -> Load unpacked -> $ROOT/copy-download-path"

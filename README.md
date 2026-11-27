@@ -30,6 +30,12 @@ Small clipboard helpers for Chrome and OpenCode on Ubuntu (GNOME, X11).
   (find a class with `xprop WM_CLASS`, then click the window).
 - Trade-off: selecting text in OpenCode replaces whatever was in the clipboard,
   including a copied image.
+- Selections stay out of CopyQ's history, so it keeps only real `Ctrl+C` copies.
+  Each copy carries an extra format `application/x-select-to-clipboard`, and a CopyQ
+  automatic command "Ignore copy-on-select (OpenCode selections)" (Input = that
+  format, Remove item) skips it. CopyQ reads formats only when it starts, so restart
+  CopyQ after adding the command. Set `SELECT_COPY_HISTORY=1` to record them again.
+  (KDE's `x-kde-passwordManagerHint` can't be used: GTK4 rejects it as a mime type.)
 - Runs as the systemd user service `select-to-clipboard.service`.
 
 ## Install

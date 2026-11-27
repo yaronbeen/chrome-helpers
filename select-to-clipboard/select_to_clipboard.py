@@ -6,16 +6,22 @@ When the focused window belongs to one of APPS, this also puts the selected
 text in the normal clipboard, so Ctrl+V pastes it anywhere.
 
 Other apps are left alone. Set SELECT_COPY_APPS to a comma-separated list of
-WM_CLASS names to change which apps get this (see `xprop WM_CLASS`)."""
+WM_CLASS names to change which apps get this (see `xprop WM_CLASS`).
+Selections are kept out of clipboard-manager history (CopyQ) unless
+SELECT_COPY_HISTORY=1."""
 import os, subprocess
 
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version("Gdk", "4.0")
-from gi.repository import GLib, Gdk, Gtk
+from gi.repository import GLib, GObject, Gdk, Gtk
 
 APPS = {a.strip().lower() for a in
         os.environ.get("SELECT_COPY_APPS", "ai.opencode.desktop").split(",") if a.strip()}
+KEEP_IN_HISTORY = os.environ.get("SELECT_COPY_HISTORY") == "1"  # 1 = let CopyQ record selections
+# Extra clipboard format that marks a copy as "made by copy-on-select".
+# (GTK4 refuses KDE's x-kde-passwordManagerHint: not a valid mime type.)
+MARK = "application/x-select-to-clipboard"
 DELAY_MS = 300  # wait until the mouse drag / Shift+arrow selection settles
 
 Gtk.init()
@@ -60,7 +66,13 @@ def on_text(_cb, res):
         return
     if not text or not text.strip():
         return
-    clipboard.set(text)
+    parts = [Gdk.ContentProvider.new_for_value(GObject.Value(GObject.TYPE_STRING, text))]
+    if not KEEP_IN_HISTORY:
+        # A CopyQ rule ignores clipboard content carrying MARK (see README),
+        # so selections don't flood the history; real Ctrl+C copies still land.
+        parts.append(Gdk.ContentProvider.new_for_bytes(
+            MARK, GLib.Bytes.new(b"1")))
+    clipboard.set_content(Gdk.ContentProvider.new_union(parts))
     print(f"copied {len(text)} chars", flush=True)
 
 
