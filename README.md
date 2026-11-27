@@ -1,6 +1,6 @@
 # chrome-helpers
 
-Two small helpers for Chrome on Ubuntu (GNOME, X11).
+Small clipboard helpers for Chrome and OpenCode on Ubuntu (GNOME, X11).
 
 ## copy-download-path (Chrome extension)
 - Notification when a download finishes, with **Copy path** / **Show in folder**.
@@ -20,6 +20,17 @@ Two small helpers for Chrome on Ubuntu (GNOME, X11).
   file (OpenCode prefers files), and a plain-text paste carries only the path.
 - Files older than 24 hours are deleted (checked hourly).
 - Runs as the systemd user service `chrome-image-clip-path.service`.
+
+## select-to-clipboard (background service)
+- Copy-on-select for the **OpenCode desktop app**: selecting text there also puts it in
+  the normal clipboard, so `Ctrl+V` pastes it anywhere (no `Ctrl+C` needed).
+- Only acts when the focused window is OpenCode (`WM_CLASS ai.opencode.desktop`); every
+  other app keeps the normal Linux behaviour (selection = middle-click paste only).
+- More apps: set `SELECT_COPY_APPS=ai.opencode.desktop,other-class` in the unit
+  (find a class with `xprop WM_CLASS`, then click the window).
+- Trade-off: selecting text in OpenCode replaces whatever was in the clipboard,
+  including a copied image.
+- Runs as the systemd user service `select-to-clipboard.service`.
 
 ## Install
 ```sh
